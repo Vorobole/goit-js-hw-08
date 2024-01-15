@@ -102,17 +102,22 @@ list.addEventListener('click', function (e) {
 
     lightboxInstance = basicLightbox.create(
       `<img src="${origImageSrc}" alt="Large Image">`,
+      {
+        onShow: () => {
+          window.addEventListener('keydown', handleKeyDown);
+        },
+        onClose: () => {
+          window.removeEventListener('keydown', handleKeyDown);
+        },
+      },
     );
 
     lightboxInstance.show();
-
-    window.addEventListener('keydown', handleKeyDown);
   }
 });
 
 function handleKeyDown(e) {
-  if (e.code === `Escape`) {
+  if (e.code === 'Escape') {
     lightboxInstance.close();
-    window.removeEventListener('keydown', handleKeyDown);
   }
 }
